@@ -3,12 +3,16 @@
 ## Attaque 1: BD fuitée et mot de passe
 
 1. Etape 1 + copie d'écran
-
+![Titre de l'image](im1.png)
 
 2. Etape 2 + copie d'écran
-
+![Titre de l'image](im2.png)
 
 3. etc.
+![Titre de l'image](im3.png)
+
+4.
+![Titre de l'image](im4.png)
 
 
 
