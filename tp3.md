@@ -42,12 +42,37 @@ Remplacer le hachage MD5 en BCrypt
 
 Preuve que l'attaque ne fonctionne plus avec étapes + copie d'écran
 
+1. On peut clairement voir que le hachage est dans un autre format plus difficile à cracker
+
+![Titre de l'image](im7.png)
+
+2. Malgré que j'ai mis 1234 comme mot de passe crackstation n'arrive pas à le déchiffrer donc le correctif fonctionne parfaitement.
+![Titre de l'image](im8.png)
+
 
 ## Attaque 2: BD fuitée et encryption
 
-1. Etape 1 + copie d'écran
-2. Etape 2 + copie d'écran
-3. etc.
+1. Etape 1 
+On a déjà accès à la base de données donc on va essayer de trouver la logique d'encryption en faisant des tests de NAS de 1 à 9.
+
+![Titre de l'image](im9.png)
+
+Après ces tests on peut voir que :
+1=b
+2=d
+3=f
+4=h
+5=j
+6=l
+7=n
+8=p
+9=r
+
+2. Etape 2 
+Juste pour tout confirmer j'ai créée un NAS : 123456789 et il m'a donné comme résultat : bdfhjlnpr comme prévu.
+
+![Titre de l'image](im10.png)
+
 
 ### Correctif implanté
 
