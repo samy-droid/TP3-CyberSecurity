@@ -27,6 +27,19 @@ Mark carney : 	fortsmith
 
 Description du correctif.
 
+Pour plus de sécurité on va modifier le code source de l'application
+Pour ce faire on va changer le hachage md5  avec un hachage avec BCrypt qui va utiliser un sel unique et un hachage plus sécurisé.
+
+1. Étape 1
+Télécharger la librairie BCrypt :
+
+![Titre de l'image](im5.png)
+
+2. Étape 2
+Remplacer le hachage MD5 en BCrypt
+
+![Titre de l'image](im6.png)
+
 Preuve que l'attaque ne fonctionne plus avec étapes + copie d'écran
 
 
