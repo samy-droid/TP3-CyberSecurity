@@ -185,6 +185,7 @@ class Program
     public static void Connexion()
     {
         Console.WriteLine("Connexion");
+        
         Formulaires.FormulaireConnexion formulaire = Prompt.Bind<Formulaires.FormulaireConnexion>();
         Console.WriteLine(formulaire.MotDePasse);
         DonneesUtilisateur utilisateur = DonneesAcces.BDUtilisateurParSonNom(formulaire.Nom);

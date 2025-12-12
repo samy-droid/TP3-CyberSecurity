@@ -50,10 +50,15 @@ namespace consoleApp
         }
 
         public static bool VerifierLeMotDePasse(string motDePasse, string hache)
+
         {
-            // Compare le mot de passe avec son hachage bcrypt
-            return hache == DonneesSecurite.HacherLeMotDePasse(motDePasse);
+
+            // Vérifie le mot de passe en utilisant le sel stocké dans le hash
+
+            return BCrypt.Net.BCrypt.Verify(motDePasse, hache);
+
         }
+
 
     }
 }

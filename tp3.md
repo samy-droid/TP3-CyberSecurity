@@ -98,12 +98,33 @@ Preuve que l'attaque ne fonctionne plus avec étapes + copie d'écran
 
 ## Attaque 3 Injection SQL
 
-1. 
-2. 
+1. On va injecter du code SQL destructrice pour écraser la table MUtilisateur.
+On commence par se connecter puis dans le champ nom on ajoute le code SQL comme dans la capture d'écran. Ensuite on met n'importe quel mot de passe. La connexion va bien sur échouer, la première requête va pas fonctionner non plus mais la deuxième requête pour supprimer la table MUtilisateur va fonctionner. 
+
+![Titre de l'image](im14.png)
+
+2. Preuves que la table MUtilisateur a bien été supprimé
+
+![Titre de l'image](im15.png)
 3. 
 
 ### Correctif implanté
 
 Description du correctif.
+
+Dans le code il y a 3 endroits où il y a des failles car il y a trop de concaténation de chaines de  caractère (strings). Ce qui le rend vulnérable car on peut insérer du code sql malveillant et faire des dégats comme montré précédemment avec le code DROP TABLE....
+
+![Titre de l'image](im16.png)
+
+![Titre de l'image](im17.png)
+
+
+Pour le corriger on a modifié le code en utilisant des paramètres SQL. Donc toutes les requêtes ont été réecrites avec des paramètres SQL. Ce qui fait que les données des utilisateurs sont traités comme des valeurs avec le @.
+
+![Titre de l'image](im18.png)
+
+![Titre de l'image](im19.png)
+
+![Titre de l'image](im20.png)
 
 Preuve que l'attaque ne fonctionne plus avec étapes + copie d'écran
