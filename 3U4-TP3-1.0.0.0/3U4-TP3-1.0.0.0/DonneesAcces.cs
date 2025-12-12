@@ -70,16 +70,18 @@ namespace consoleApp
         public static void BDCreerUtilisateur(Formulaires.FormulaireNouveauCompte compte)
         {
             sqlite_conn.Open();
-            SqliteCommand sqlite_cmd;
-            sqlite_cmd = sqlite_conn.CreateCommand();
-            sqlite_cmd.CommandText = "INSERT INTO MUtilisateur (nom, motDePasse, nas) " +
-                                     "VALUES('" + compte.Nom + "', '" +
-                                     DonneesSecurite.HacherLeMotDePasse(compte.MotDePasse) + "', '" +
-                                     DonneesSecurite.Encrypter(compte.NAS) + "'); ";
-            sqlite_cmd.ExecuteNonQuery();
+            using (var sqlite_cmd = sqlite_conn.CreateCommand())
+            {
+                sqlite_cmd.CommandText =
+                    "INSERT INTO MUtilisateur (nom, motDePasse, nas) VALUES (@nom, @mdp, @nas)";
+                sqlite_cmd.Parameters.AddWithValue("@nom", compte.Nom);
+                sqlite_cmd.Parameters.AddWithValue("@mdp", DonneesSecurite.HacherLeMotDePasse(compte.MotDePasse));
+                sqlite_cmd.Parameters.AddWithValue("@nas", DonneesSecurite.Encrypter(compte.NAS));
+                sqlite_cmd.ExecuteNonQuery();
+            }
             sqlite_conn.Close();
         }
-        
+
         public static List<DonneesUtilisateur> BDLireUtilisateurs()
         {
             sqlite_conn.Open();
@@ -107,42 +109,51 @@ namespace consoleApp
         public static List<DonneesAnneeRevenu> BDRevenusPour(string utilisateurConnecte)
         {
             sqlite_conn.Open();
-            SqliteDataReader sqlite_datareader;
-            SqliteCommand sqlite_cmd;
-            sqlite_cmd = sqlite_conn.CreateCommand();
             List<DonneesAnneeRevenu> liste = new List<DonneesAnneeRevenu>();
-            // exécute la requête et obtient les données
-            sqlite_cmd.CommandText = "SELECT * FROM MAnneeRevenu WHERE nom = '" + utilisateurConnecte + "'";
-            sqlite_datareader = sqlite_cmd.ExecuteReader();
-            while (sqlite_datareader.Read())
+            using (var sqlite_cmd = sqlite_conn.CreateCommand())
             {
-                DonneesAnneeRevenu revenu = new DonneesAnneeRevenu();
-                revenu.Nom = sqlite_datareader.GetString(0);
-                revenu.Annee = sqlite_datareader.GetInt32(1);
-                revenu.Revenu = sqlite_datareader.GetInt32(2);
-                liste.Add(revenu);
+                sqlite_cmd.CommandText =
+                    "SELECT * FROM MAnneeRevenu WHERE nom = @nom";
+                sqlite_cmd.Parameters.AddWithValue("@nom", utilisateurConnecte);
+                using (var reader = sqlite_cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        liste.Add(new DonneesAnneeRevenu
+                        {
+                            Nom = reader.GetString(0),
+                            Annee = reader.GetInt32(1),
+                            Revenu = reader.GetInt32(2)
+                        });
+                    }
+                }
             }
+            sqlite_conn.Close();
             return liste;
         }
 
         public static DonneesUtilisateur BDUtilisateurParSonNom(string nom)
         {
             sqlite_conn.Open();
-            SqliteDataReader sqlite_datareader;
-            SqliteCommand sqlite_cmd;
-            sqlite_cmd = sqlite_conn.CreateCommand();
-            sqlite_cmd.CommandText = "SELECT * FROM MUtilisateur WHERE nom = '" + nom + "'";
-
-            sqlite_datareader = sqlite_cmd.ExecuteReader();
-            DonneesUtilisateur compte = new DonneesUtilisateur();
-            // récupère l'utilisateur depuis la base de données
-            while (sqlite_datareader.Read())
+            DonneesUtilisateur compte = null;
+            using (var sqlite_cmd = sqlite_conn.CreateCommand())
             {
-                compte.Nom = sqlite_datareader.GetString(0);
-                compte.MotDePasseHash = sqlite_datareader.GetString(1);
-                compte.NAS = sqlite_datareader.GetString(2);
+                sqlite_cmd.CommandText =
+                    "SELECT * FROM MUtilisateur WHERE nom = @nom";
+                sqlite_cmd.Parameters.AddWithValue("@nom", nom);
+                using (var reader = sqlite_cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        compte = new DonneesUtilisateur
+                        {
+                            Nom = reader.GetString(0),
+                            MotDePasseHash = reader.GetString(1),
+                            NAS = reader.GetString(2)
+                        };
+                    }
+                }
             }
-
             sqlite_conn.Close();
             return compte;
         }
