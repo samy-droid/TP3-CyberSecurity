@@ -76,15 +76,31 @@ Juste pour tout confirmer j'ai créée un NAS : 123456789 et il m'a donné comme
 
 ### Correctif implanté
 
-Court descriptif du correctif et lien vers le(s) commit(s).
+Court descriptif du correctif 
+
+1. On va utiliser un algo d'encryption classique pour les NAS, pour y arriver on va utiliser BlowFish
+On commence avec l'installation du paquet Portable.BouncyCastle
+
+![Titre de l'image](im12.png)
+
+2. On implante du code C# pour faire de la crypto symétrique et crypter les NAS avec BlowFish
+
+
+![Titre de l'image](im11.png)
 
 Preuve que l'attaque ne fonctionne plus avec étapes + copie d'écran
 
+3. Maintenant le format de cryptage des NAS a changé et on ne peut plus suivre une logique pour deviner la logique d'encryption.
+
+
+![Titre de l'image](im13.png)
+
+
 ## Attaque 3 Injection SQL
 
-1. Etape 1 + copie d'écran
-2. Etape 2 + copie d'écran
-3. etc.
+1. 
+2. 
+3. 
 
 ### Correctif implanté
 

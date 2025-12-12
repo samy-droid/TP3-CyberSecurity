@@ -16,7 +16,7 @@ namespace consoleApp
     {
         //cle BlowFish (entre 4 et 56 bytes)
         static byte[] KEY = Encoding.UTF8.GetBytes("cle12345"); // 4–56 bytes
-        
+
         //Chiffrement Texte en Base64
         public static string Encrypter(string input)
         {
@@ -40,7 +40,7 @@ namespace consoleApp
             len += cipher.DoFinal(output, len);
             return Encoding.UTF8.GetString(output, 0, len);
         }
-    }
+    
 
         // fonctions permettant le hachage des mots de passe
         public static string HacherLeMotDePasse(string motDePasse)
@@ -48,12 +48,14 @@ namespace consoleApp
             // Utilise la chaîne d'entrée pour générer un sel unique et un hachage sécurisé
             return BCrypt.Net.BCrypt.HashPassword(motDePasse);
         }
-        
+
         public static bool VerifierLeMotDePasse(string motDePasse, string hache)
         {
             // Compare le mot de passe avec son hachage bcrypt
             return hache == DonneesSecurite.HacherLeMotDePasse(motDePasse);
         }
-        
-    
+
+    }
 }
+
+
