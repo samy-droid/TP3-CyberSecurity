@@ -127,4 +127,15 @@ Pour le corriger on a modifié le code en utilisant des paramètres SQL. Donc to
 
 ![Titre de l'image](im20.png)
 
-Preuve que l'attaque ne fonctionne plus avec étapes + copie d'écran
+Et aussi, dans la classe Connexion, j'ai ajouté une condition pour qu'il me retourne une erreur quand l'utilisateur est nul. Car quand j'essayais à nouveau une injection SQL, il bloquait l'attaque mais me donnait une exception. Donc pour le corriger j'ai ajouté une nouvelle condition.
+
+![Titre de l'image](im22.png)
+
+Preuve que l'attaque ne fonctionne plus 
+Et maintenant je ne peux plus injecter du SQL
+
+![Titre de l'image](im21.png)
+
+La table MUtilisaateur est encore là :
+
+![Titre de l'image](im23.png)
