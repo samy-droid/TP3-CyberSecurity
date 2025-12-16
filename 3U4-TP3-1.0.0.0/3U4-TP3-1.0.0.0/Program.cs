@@ -189,7 +189,12 @@ class Program
         Formulaires.FormulaireConnexion formulaire = Prompt.Bind<Formulaires.FormulaireConnexion>();
         Console.WriteLine(formulaire.MotDePasse);
         DonneesUtilisateur utilisateur = DonneesAcces.BDUtilisateurParSonNom(formulaire.Nom);
-        if (DonneesSecurite.VerifierLeMotDePasse(formulaire.MotDePasse, utilisateur.MotDePasseHash))
+        if (utilisateur == null)
+        {
+            Console.Error.WriteLine("Connexion échouée, mauvais nom et/ou mot de passe");
+
+        }
+        else  if (DonneesSecurite.VerifierLeMotDePasse( formulaire.MotDePasse, utilisateur.MotDePasseHash))
         {
             Console.WriteLine("Connexion réussie, bienvenue " + formulaire.Nom);
             utilisateurConnecte = formulaire.Nom;
